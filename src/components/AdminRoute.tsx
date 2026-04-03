@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function AdminRoute({ children }: { children: React.ReactNode }) {
-  const { user, profile, loading } = useAuth()
+  const { user, loading } = useAuth()
 
   if (loading) {
     return (
@@ -12,7 +12,7 @@ export default function AdminRoute({ children }: { children: React.ReactNode }) 
     )
   }
 
-  if (!user || !profile?.is_admin) {
+  if (!user || user.email !== 'amarbilas@gmail.com') {
     return <Navigate to="/" replace />
   }
 
