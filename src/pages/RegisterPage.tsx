@@ -43,9 +43,7 @@ export default function RegisterPage() {
       setError(error.message || 'Failed to create account')
       setLoading(false)
     } else {
-      navigate('/login', {
-        state: { message: 'Account created! Please log in. Your account is pending approval.' },
-      })
+      navigate('/products')
     }
   }
 
@@ -59,9 +57,9 @@ export default function RegisterPage() {
             Request Researcher Access
           </h2>
 
-          <div className="bg-yellow-50 border border-yellow-400 text-yellow-800 px-4 py-3 rounded mb-6">
+          <div className="bg-blue-50 border border-blue-400 text-blue-800 px-4 py-3 rounded mb-6">
             <p className="text-sm">
-              Your account will be reviewed for approval. Only qualified researchers will be granted access.
+              Create your researcher account to access our peptide catalog. All accounts are automatically approved.
             </p>
           </div>
 

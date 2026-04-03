@@ -108,11 +108,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           full_name: fullName,
           institution,
           country,
-          account_status: 'pending',
+          account_status: 'approved',
           is_admin: false,
         })
 
         if (profileError) return { error: profileError }
+
+        await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-welcome-email`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: authData.user.email,
+            fullName: fullName,
+          }),
+        }).catch(err => console.error('Failed to send welcome email:', err))
       }
 
       return { error: null }
