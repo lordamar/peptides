@@ -10,6 +10,7 @@ import CheckoutPage from './pages/CheckoutPage'
 import OrderConfirmationPage from './pages/OrderConfirmationPage'
 import OrderHistoryPage from './pages/OrderHistoryPage'
 import AdminDashboard from './pages/AdminDashboard'
+import AdminProductsPage from './pages/AdminProductsPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminRoute from './components/AdminRoute'
 
@@ -61,6 +62,12 @@ function App() {
           <Route path="/admin/*" element={
             <AdminRoute>
               <AdminDashboard />
+            </AdminRoute>
+          } />
+
+          <Route path="/adminsite" element={
+            <AdminRoute>
+              <AdminProductsPage />
             </AdminRoute>
           } />
         </Routes>
