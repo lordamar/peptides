@@ -126,6 +126,20 @@ export default function CartPage() {
     fetchCart()
   }
 
+  const handleQuantityInputChange = async (itemId: string, value: string, maxStock: number) => {
+    const numValue = parseInt(value)
+    if (isNaN(numValue) || numValue < 1) return
+
+    const clampedValue = Math.min(numValue, maxStock)
+
+    await supabase
+      .from('cart_items')
+      .update({ quantity: clampedValue })
+      .eq('id', itemId)
+
+    fetchCart()
+  }
+
   const handleRemoveItem = async (itemId: string) => {
     await supabase.from('cart_items').delete().eq('id', itemId)
     fetchCart()
@@ -198,7 +212,14 @@ export default function CartPage() {
                       >
                         -
                       </button>
-                      <span className="w-12 text-center font-medium">{item.quantity}</span>
+                      <input
+                        type="number"
+                        min="1"
+                        max={item.product.stock_quantity}
+                        value={item.quantity}
+                        onChange={(e) => handleQuantityInputChange(item.id, e.target.value, item.product.stock_quantity)}
+                        className="w-16 text-center font-medium border border-gray-300 rounded-lg py-1"
+                      />
                       <button
                         onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                         className="w-8 h-8 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50"
