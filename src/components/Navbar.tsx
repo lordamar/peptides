@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function Navbar() {
-  const { user, profile, signOut } = useAuth()
+  const { user, signOut } = useAuth()
   const navigate = useNavigate()
 
   const handleSignOut = async () => {
@@ -21,7 +21,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center space-x-4">
-            {user && profile?.account_status === 'approved' ? (
+            {user ? (
               <>
                 <Link
                   to="/products"
@@ -41,7 +41,7 @@ export default function Navbar() {
                 >
                   Orders
                 </Link>
-                {profile?.is_admin && (
+                {user.email === 'amarbilas@gmail.com' && (
                   <Link
                     to="/admin"
                     className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium"
@@ -56,13 +56,6 @@ export default function Navbar() {
                   Sign Out
                 </button>
               </>
-            ) : user ? (
-              <button
-                onClick={handleSignOut}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm font-medium"
-              >
-                Sign Out
-              </button>
             ) : (
               <>
                 <Link
