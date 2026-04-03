@@ -23,13 +23,20 @@ export default function ProductsPage() {
 
   const fetchProducts = async () => {
     setLoading(true)
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('products')
       .select('id, sku, product_name, specification, sell_price, stock_quantity')
       .eq('is_active', true)
       .order('product_name')
 
-    if (data) setProducts(data)
+    if (error) {
+      console.error('Error fetching products:', error)
+    }
+
+    if (data) {
+      console.log('Products fetched:', data.length)
+      setProducts(data)
+    }
     setLoading(false)
   }
 
